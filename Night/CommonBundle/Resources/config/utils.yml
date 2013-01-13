@@ -1,0 +1,6 @@
+services:
+    string_util:
+        class: Night\CommonBundle\Utils\StringUtil
+      
+    entity_util:
+        class: Night\CommonBundle\Utils\EntityUtil   

@@ -1,0 +1,27 @@
+parameters:
+    genders:
+        m: M
+        f: F
+
+services:  
+    night.common.form_type_extension:
+        class: Night\CommonBundle\Form\Extension\FormTypeExtension
+        tags:
+            - { name: form.type_extension, alias: form }
+            
+    night.common.file_type_extension:
+        class: Night\CommonBundle\Form\Extension\FileTypeExtension
+        tags:
+            - { name: form.type_extension, alias: file }
+            
+    night.form.type.gender:
+        class: Night\CommonBundle\Form\Type\GenderType
+        arguments:
+            - "%genders%"
+        tags:
+          - { name: form.type , alias: gender }       
+           
+    night.form.type.delete_box:
+        class: Night\CommonBundle\Form\Type\DeleteBoxType
+        tags:
+          - { name: form.type , alias: delete_box }          

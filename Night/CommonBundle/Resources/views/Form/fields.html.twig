@@ -1,0 +1,73 @@
+{% block gender_widget %}
+	{% spaceless %}
+		{% if expanded %}
+		<ul {{ block('widget_container_attributes') }}>
+			{% for child in form %}
+			<li>
+				{{ form_widget(child) }}
+				{{ form_label(child) }}
+			</li>
+			{% endfor %}
+		</ul>
+		{% else %}
+			{# just let the choice widget render the select tag #}
+			{{ block('choice_widget') }}
+		{% endif %}
+	{% endspaceless %}
+{% endblock %}
+
+{#-- =================== Fonctionnalites implementees -->	
+	<!-- Ajout de la classe errors -->
+#}		
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+    <ul class="errors">
+        {% for error in errors %}
+            <li>{{
+                error.messagePluralization is null
+                    ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                    : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+            }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
+{#-- =================== Fonctionnalites implementees -->	
+	<!-- filename -->
+#}		
+{% block form_widget_simple %}
+{% spaceless %}
+    {% set type = type|default('text') %}
+	{% if filename is defined and filename is not null %}
+		<p class="filename">{{filename}}</p>	
+	{% endif %}
+		<input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{% endspaceless %}
+{% endblock form_widget_simple %}
+		
+		
+{% block form_row %}
+{% spaceless %}
+    <div>
+		{% if not no_label %}
+			{{ form_label(form, label|default(null)) }}
+		{% endif %}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+		
+		
+{% block delete_box_row %}
+	{% spaceless %}
+		<div class="form-delete-box">
+			{{form_widget(form)}}
+			{{form_label(form)}}
+		</div>
+	{% endspaceless %}
+{% endblock %}
+		
